@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app" style="font-size: 20px; color: black;">
+        <div>名字：{{ name }}，OK，{{ name }}，OK</div>
+        <span>{{ age }}</span>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    name: '名字',
+                    age: 18,
+                    arr: [1,2,3, {a:1}],
+                    a: {
+                        b: 2
+                    }
+                }
+            }
+        });
+        vm._data.arr.push({b:2})
+        vm.a.b = 1;
+        console.log(vm);
+    </script>
+</body>
+</html>

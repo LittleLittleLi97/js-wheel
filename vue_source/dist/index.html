@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app" style="font-size: 20px; color: black;" key="123">
+        <div>名字：{{ name }}，OK，{{ name }}，结尾处</div>
+        <div>{{ fullname }}</div>
+        <span>{{ age }}</span>
+        <div>{{ arr }}</div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    name: '张',
+                    lastname: '三',
+                    age: 18,
+                    arr: [1,2,3, {a:1}],
+                }
+            },
+            computed: {
+                fullname() {
+                    return this.name + this.lastname;
+                }
+            },
+        });
+        setTimeout(() => {
+            vm.name = '1';
+        }, 1000);
+    </script>
+</body>
+</html>

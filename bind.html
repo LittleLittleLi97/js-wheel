@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // https://zhuanlan.zhihu.com/p/163254710
+        // https://www.jianshu.com/p/b540e1e17f54
+        Function.prototype.bind1 = function() {
+            const fn = this;
+            const args = Array.prototype.slice.call(arguments);
+            const _this = args.shift();
+
+            if (typeof fn !== 'function') {
+                throw new Error('not a function');
+            }
+
+            return function() {
+                const newArgs = Array.prototype.slice.call(arguments);
+                return fn.apply(_this, args.concat(newArgs));
+            }
+        }
+
+        Function.prototype.bind2 = function() {
+            const fn = this;
+            const args = Array.prototype.slice.call(arguments);
+            const _this = args.shift();
+
+            if (typeof fn !== 'function') {
+                throw new Error('not a function');
+            }
+
+            let resultFunc = function() {
+                const newArgs = Array.prototype.slice.call(arguments);
+                fn.apply(this instanceof resultFunc ? this : _this, args.concat(newArgs));
+            }
+
+            resultFunc.prototype = fn.prototype;
+
+            return resultFunc;
+        }
+
+        // // 97 - fn不是function的情况
+        // const a = {};
+        // a.__proto__ = Function.prototype;
+        // a.bind1({})();
+
+        function fn(...args) {
+            console.log(this);
+            console.log(args);
+        }
+        fn.bind1({}, 1, 2, 3)(4, 5);
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="button">点击</button>
+    <script>
+        const button = document.getElementById('button');
+        
+        function debounce(func, delay) {
+            let timer;
+            return function() { // 注意这里是function，不是箭头函数，如果是箭头函数，则this指向外面一层，就是window
+                const args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(()=> { // 如果这里是function，则由window来调用，this指向window
+                    func.apply(this, args);
+                }, delay)
+            }
+        }
+
+        function func() {
+            console.log(this);
+        }
+
+        // 执行debounce后，返回内层函数，此函数this指向其调用者button
+        button.addEventListener('click', debounce(func, 500));
+    </script>
+</body>
+</html>
