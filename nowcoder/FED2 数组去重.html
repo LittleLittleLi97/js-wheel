@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8>
+    </head>
+    <body>
+    	
+        <script type="text/javascript">
+            const _deleteRepeat = array => {
+                // 补全代码
+                const map = {};
+                const list = [];
+                for (let i = 0; i < array.length; i++) {
+                    if (map[array[i]] === true) continue;
+                    list.push(array[i]);
+                    map[array[i]] = true;
+                }
+                return list;
+            }
+            const _deleteRepeat2 = array => {
+                // 补全代码
+                return [...new Set(array)];
+            }
+        </script>
+    </body>
+</html>
