@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 97 - 把函数放入到需要指向的对象中执行，那么this指向的是此对象
+
+        Function.prototype.myCall = function(obj, ...args) {
+            obj = obj ? Object(obj) : window; // obj需要是一个对象，如果obj存在，则包装成对象，如果不存在，则指向window
+            
+            const fn = Symbol('fn');
+            obj[fn] = this; // this是函数对象本身
+
+            const result = obj[fn](...args); // 使用obj来调用函数执行，那么函数的this指向的是obj
+            delete obj[fn];
+
+            return result;
+        }
+
+        Function.prototype.myApply = function(obj, args=[]) {
+            obj = obj ? Object(obj) : window;
+
+            const fn = Symbol('fn');
+            obj[fn] = this;
+
+            const result = obj[fn](...args);
+            delete obj[fn];
+
+            return result;
+        }
+
+        function func(a, b, c) {
+            console.log(this, a, b, c); // 注意这里输出的this会有Symbol('fn')，是因为执行func函数的时候还没有删除obj[fn]
+        }
+        func.myCall({a:1}, 1, 2, 3);
+    </script>
+</body>
+</html>
