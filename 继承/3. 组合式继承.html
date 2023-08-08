@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 组合继承
+        // 优点：1.父类可以复用
+        //      2.父类构造函数中的属性不会被子类实例之间共享
+        // 缺点：会调用两次父类的构造函数，会有两份一样的属性
+
+        // 97 - 子类对象上有一份属性，子类prototype上也有一份属性
+
+        function Person() {
+            this.name = '小明';
+            this.eats = ['苹果'];
+            this.getName = ()=>{
+                console.log(this.name);
+            }
+        }
+        Person.prototype.get = ()=>{
+            console.log('Person.prototype上的方法');
+        }
+
+        function Student() {
+            Person.call(this); // 把Person类上的初始化的赋值直接赋值到Student的对象上
+        }
+        Student.prototype = new Person(); // 给Student挂上父类的方法，但同时也又赋值了一份属性到Student.prototype上（执行了Person的构造函数）
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 原型链继承
+        // 优点：父类方法可以复用
+        // 缺点：1.父类所有的引用类型数据（对象、数组）会被子类共享，更改一个子类对象的数据，其他对象也会收到影响
+        //      2.子类实例不能给父类构造函数传参
+
+        // 97 - 其实说引用类型数据会被子类共享是片面的，实际上基本数据类型也是被共享的
+        // 只是对基本数据类型的操作会将数据赋值到子类的对象上，而不是对prototype上的数据
+        // 因此，更合理的说法应该是：子类对象的数据是共享的，对象不拥有自己的数据
+
+        function Person() {
+            this.name = '小明';
+            this.eats = ['苹果'];
+            this.getName = function() {
+                console.log(this.name);
+            }
+        }
+        Person.prototype.get = ()=>{
+            console.log('Person.prototype上的方法');
+        }
+
+        function Student() {} // 这里没有对父类构造函数传参的操作
+        Student.prototype = new Person();
+        // 97 - 看样子，是因为这里的prototype为唯一的一个Person的对象
+        // 当stu1.name赋值'小红'时，stu1对象上的name发生赋值，而prototype上的name没有改变，以后操作name属性时，操作的是stu1上的name
+        // 而stu1.eats.push('梨')的操作，是对prototype上的eats的操作，没有赋值到stu1上，因此修改的是所有子类的原型，之后访问还是prototype上的eats
+        // 换言之，如果对stu1.eats赋值为1，那么输出时是直接输出stu1上的1，而不是prototype上的eats数组
+
+        const stu1 = new Student();
+        stu1.name = '小红';
+        stu1.eats.push('梨');
+        stu1.getName();
+        console.log(stu1.eats); // ['苹果', '梨']
+        stu1.get();
+
+        console.log('stu1.name:', stu1.name); // 小红 -> 直接输出stu1上的name
+        console.log('stu1.prototype.name:', stu1.__proto__.name) // 小明
+        console.log('stu1.eats:', stu1.eats) // ['苹果', '梨'] -> stu1上找不到eats，输出prototype上的eats
+        console.log('stu1.__proto__.eats:', stu1.__proto__.eats) // ['苹果', '梨']
+
+        console.log('------------------------------------------------------------------------------------------')
+        const stu2 = new Student();
+        stu2.getName();
+        console.log(stu2.eats); // ['苹果', '梨']
+        stu2.get();
+
+        console.log('stu2.name:', stu2.name); // 小明 -> stu2上找不到name，输出protoype上的name
+        console.log('stu2.prototype.name:', stu2.__proto__.name) // 小明
+        console.log('stu2.eats:', stu2.eats) // ['苹果', '梨']
+        console.log('stu2.__proto__.eats:', stu2.__proto__.eats) // ['苹果', '梨']
+    </script>
+</body>
+</html>

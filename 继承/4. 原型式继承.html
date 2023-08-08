@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 原型式继承
+        // 这种方法没有使用严格意义上的构造函数，而是借助原型可以基于已有的对象创建新对象
+        // 原理：向函数中传入一个对象，然后返回一个以这个对象为原型的对象
+        // 缺点：与原型链方式相同，object()对传入其中的对象执行了一次浅拷贝
+
+        var person = {
+            name: '小明',
+            eats: ['苹果']
+        }
+
+        // 写法1
+        function object(o) {
+            function F() {}
+            F.prototype = o;
+            return new F();
+        }
+        var stu1 = object(person);
+        var stu2 = object(person);
+
+        stu1.name = '小红';
+        stu1.eats.push('梨');
+
+        console.log(stu1.name); // 小红
+        console.log(stu1.eats); // ['苹果', '梨']
+        console.log(stu2.name); // 小明
+        console.log(stu2.eats); // ['苹果', '梨']
+
+        // 写法2
+        var stu = Object.create(person);
+    </script>
+</body>
+</html>

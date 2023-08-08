@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 寄生式继承
+        // 创建一个仅用于封装继承过程的函数，该函数在内部以某种方式来增强对象，最后再像真的是它做了所有工作一样返回对象。
+        // 缺点：不能函数复用，97 - 经验证，也存在原型式继承的缺点
+
+        var person = {
+            name: '小明',
+            eats: ['苹果']
+        }
+
+        function object(o) {
+            function F() {}
+            F.prototype = o;
+            return new F();
+        }
+        function createAnother(o) {
+            var clone = object(o);
+            clone.sayHi = function() {
+                console.log('hi');
+            }
+            return clone;
+        }
+        var stu1 = createAnother(person);
+        var stu2 = createAnother(person);
+
+        stu1.name = '小红';
+        stu1.eats.push('梨');
+
+        console.log(stu1.name); // 小红
+        console.log(stu1.eats); // ['苹果', '梨']
+        console.log(stu2.name); // 小明
+        console.log(stu2.eats); // ['苹果', '梨']
+    </script>
+</body>
+</html>
