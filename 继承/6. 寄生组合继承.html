@@ -47,10 +47,10 @@
         // 实际上更改constructor的指向并不影响类的初始化
 
         console.log(Student.prototype) // Student的原型是Person的原型的对象
-        console.log(stu.__proto__) // Student对象的原型时Person的原型的对象：{ constructor: , prototype: { Person的原型 } }
+        console.log(stu.__proto__) // Student对象的原型时Person的原型的对象：{ constructor: , __proto__: { Person的原型 } }
         // 97 - 在组合继承中，将父类对象整体作为子类的原型，而寄生组合继承只把父类的原型对象作为子类的原型。
         //      一定要使用父类的原型对象，而不是父类的原型，否则子类的原型就是父类的原型，修改子类的原型时修改的其实是父类的原型。
-        //      访问父类上原型的方法时，寻找路径为: stu.__proto__ (Person的原型的对象) -> stu.__proto__.prototype (Person的原型)，（Person原型对象的原型是Person原型）。
+        //      访问父类上原型的方法时，寻找路径为: stu.__proto__ (Person的原型的对象) -> stu.__proto__.__proto__ (Person的原型)，（Person原型对象的原型是Person原型）。
         //      因此，如果为子类添加方法，会添加到Person的原型的对象上，而不是Person的原型上。
 
         class A {

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function instance(obj, className) {
+            if (!['function', 'object'].includes(typeof obj) || obj === null) {
+                return false;
+            }
+            while (obj) {
+                if (obj.__proto__ === className.prototype) {
+                    return true;
+                }
+                obj = obj.__proto__;
+            }
+            return false;
+        }
+
+        console.log(instance([], Array));
+
+        class A {
+            constructor() {
+                this.name = 'hisname';
+            }
+        }
+        class B extends A {
+            constructor() {
+                super();
+                this.age = 10;
+            }
+        }
+        console.log(instance(new B(), A));
+
+        class C {
+            constructor() {
+                this.name = 'hisname';
+            }
+        }
+        console.log(instance(new C(), A));
+    </script>
+</body>
+</html>

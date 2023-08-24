@@ -33,7 +33,7 @@ Promise.prototype.then = function(onResolved, onRejected) {
                 try {
                     let result = fn(this.PromiseResult);
                     if (result instanceof Promise) {
-                        result.then(onResolved, onRejected);
+                        result.then(resolve, reject);
                     } else {
                         resolve(result);
                     }
