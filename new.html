@@ -9,6 +9,13 @@
     <script>
         // https://github.com/febobo/web-interview/issues/69
 
+        /**
+            new 操作符创建对象时，主要做 4 件事：
+                1. 创建一个新对象。
+                2. 建立原型链：将新对象的 [[Prototype]] 指向构造函数的 prototype。
+                3. 执行构造函数：将构造函数中的 this 绑定到新对象，并执行初始化逻辑。
+                4. 返回对象：如果构造函数显式返回对象，则返回该对象；否则返回新创建的对象。
+         */
         function Person(name) {
             this.name = name;
         }
